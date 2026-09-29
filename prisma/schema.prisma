@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Category {
+  id                 String    @id @default(cuid())
+  name               String
+  slug               String    @unique
+  discountPercentage Float     @default(0)
+  products           Product[]
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
+
+model Product {
+  id                 String      @id @default(cuid())
+  title              String
+  sku                String      @unique
+  description        String
+  price              Float
+  discountPercentage Float       @default(0)
+  stockQuantity      Int         @default(0)
+  categoryId         String
+  category           Category    @relation(fields: [categoryId], references: [id])
+  imageUrl           String      @default("")
+  status             String      @default("DRAFT") // DRAFT | ACTIVE | ARCHIVED
+  orderItems         OrderItem[]
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+}
+
+model Customer {
+  id         String   @id @default(cuid())
+  name       String
+  email      String   @unique
+  phone      String   @default("")
+  totalSpent Float    @default(0)
+  orders     Order[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Order {
+  id             String      @id @default(cuid())
+  customerId     String
+  customer       Customer    @relation(fields: [customerId], references: [id])
+  items          OrderItem[]
+  subtotal       Float
+  taxAmount      Float       @default(0)
+  shippingCost   Float       @default(0)
+  discountAmount Float       @default(0)
+  total          Float
+  shippingStatus String      @default("PENDING") // PENDING | PROCESSING | SHIPPED | DELIVERED | REFUNDED | RETURNED
+  paymentStatus  String      @default("PAID") // PAID | REFUNDED | FAILED
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+model OrderItem {
+  id          String  @id @default(cuid())
+  orderId     String
+  order       Order   @relation(fields: [orderId], references: [id])
+  productId   String
+  product     Product @relation(fields: [productId], references: [id])
+  productName String
+  unitPrice   Float
+  quantity    Int
+}
+
+model ShippingZone {
+  id     String @id @default(cuid())
+  region String
+  cost   Float
+}
+
+model PromoCode {
+  id              String  @id @default(cuid())
+  code            String  @unique
+  discountPercent Float
+  active          Boolean @default(true)
+}
+
+model StoreSetting {
+  id        String @id @default(cuid())
+  key       String @unique
+  value     String
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("USER") // USER | ADMIN
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

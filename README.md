@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+CSD Web Application is a modern full-stack e-commerce platform built with Next.js 16, React 19, TypeScript, and Prisma ORM with SQLite. It features dynamic product browsing, category filtering, cart management, secure user authentication with role-based access control, and a feature-rich admin dashboard for managing orders, inventory, and revenue analytics.
 
-## Getting Started
+---
 
-First, run the development server:
+# CSD Web Application
 
+## 🚀 Overview
+
+CSD Web is an end-to-end e-commerce web application featuring a seamless customer shopping experience alongside a comprehensive administrative dashboard.
+
+---
+
+## ✨ Features
+
+### 🛍️ Storefront (Customer Facing)
+- **Product Catalog**: Browse products with search, category filtering, and sorting.
+- **Cart & Checkout**: Interactive cart state management and checkout process.
+- **User Authentication**: Secure user registration and login with encrypted session cookies.
+
+### 🛡️ Admin Dashboard (`/admin`)
+- **Analytics & Metrics**: Revenue charts, order trends, customer growth, and active inventory tracking.
+- **Order Management**: View detailed order summaries, customer info, shipping statuses (`PENDING`, `PROCESSING`, `SHIPPED`, `DELIVERED`, `REFUNDED`), and payment statuses.
+- **Manual Order Creation**: Create orders directly through the admin panel.
+- **Product & Inventory**: Create, update, draft, or archive products with SKU and inventory tracking.
+- **Store Settings**: Manage shipping zones, rates, and promotional discount codes.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router + Turbopack)
+- **Frontend**: [React 19](https://react.dev/), TypeScript, [Tailwind CSS v4](https://tailwindcss.com/)
+- **Icons & Charts**: [Lucide React](https://lucide.dev/), [Recharts](https://recharts.org/)
+- **Database & ORM**: [SQLite](https://www.sqlite.org/) managed via [Prisma ORM v7](https://www.prisma.io/)
+- **Authentication**: `jose` (JWT), `bcryptjs` for password hashing
+
+---
+
+## 🚦 Getting Started
+
+### 1. Prerequisites
+- **Node.js**: v20+ (recommended v22+)
+- **npm**: v10+
+
+### 2. Installation
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Install dependencies
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Database Setup & Seeding
+```bash
+# Run migrations
+npx prisma migrate dev
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Seed database with sample products, categories, orders, and admin user
+npm run db:seed
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Running Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔐 Default Admin Credentials
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Email**: `admin@csd.com`
+- **Password**: `admin123`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📂 Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+├── prisma/
+│   ├── schema.prisma       # Prisma DB schema models
+│   ├── seed-node.mjs       # Database seed script
+│   └── migrations/         # Migration history
+├── src/
+│   ├── app/
+│   │   ├── actions/        # Server actions (auth, products, orders)
+│   │   ├── admin/          # Admin dashboard pages
+│   │   ├── login/          # Login page
+│   │   └── register/       # Registration page
+│   ├── components/         # UI components & admin charts
+│   └── lib/                # Database client & auth utilities
+└── dev.db                  # Local SQLite database file
+```
