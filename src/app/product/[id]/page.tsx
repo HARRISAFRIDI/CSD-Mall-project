@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { ShoppingCart, ShieldCheck, Truck, RotateCcw } from "lucide-react";
 import Image from "next/image"; // Note: Since we are using standard img tags for external unsplash in this demo to avoid next.config.js host setup, I will use standard img.
 
+export const dynamic = "force-dynamic";
+
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   

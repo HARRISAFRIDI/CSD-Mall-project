@@ -3,6 +3,8 @@ import { StorefrontHeader } from "@/components/storefront-header";
 import Link from "next/link";
 import { ArrowRight, ShoppingCart, Laptop, Shirt, Watch, Home } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export default async function StorefrontPage() {
   const getCategoryImageUrl = (slug: string) => {
     switch (slug) {

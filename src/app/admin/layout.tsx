@@ -1,6 +1,9 @@
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import type { Metadata } from "next";
 
+// Admin pages query live data and must not run against a build-time database.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: {
     template: "%s | CSD Admin",
